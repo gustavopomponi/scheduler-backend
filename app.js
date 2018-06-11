@@ -19,14 +19,9 @@ const express = require('express'),
 app.use(logger('dev'));
 app.use(cors());
 
-// Parse incoming requests data (https://github.com/expressjs/body-parser)
-
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-//app.get('*', (req, res) => res.status(200).send({
-//  message: 'Welcome to the beginning of nothingness.',
-//}));
 
 routes(app, controllers);
 

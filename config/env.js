@@ -2,7 +2,6 @@
 
 const env = {
   PORT: process.env.PORT || 3000,
-  //DATABASE_URL: process.env.DATABASE_URL || 'jdbc:postgresql://localhost:5432/db_casadecarnes',
   DATABASE_NAME: process.env.DATABASE_NAME || 'db_scheduler',
   DATABASE_HOST: process.env.DATABASE_HOST || 'localhost',
   DATABASE_USERNAME: process.env.DATABASE_USERNAME || 'usrscheduler',
