@@ -21,7 +21,9 @@ module.exports = {
                                      ' par.des_smtppassword "senhasmtp",' +
                                      ' par.des_smtpport "portasmtp",' +
                                      ' par.boo_smtpstarttls "starttlsmtp",' +
-                                     ' par.des_smtpusername "usuariosmtp"' +
+                                     ' par.des_smtpusername "usuariosmtp",' +
+                                     ' par.num_taxajuros "taxajuros",' +
+                                     ' par.num_taxamulta "taxamulta"' +
                                   ' from'+
                                     ' tb_parametro par' +
                                     ' inner join tb_periodoverificacao per on (per.cod_periodoverificacao = par.cod_periodoverificacao)', { type: sequelize.QueryTypes.SELECT })
@@ -36,18 +38,18 @@ module.exports = {
         var date = new Date(Date.now()).toISOString().split('.')[0];
 
         const emailfrom = req.body.emailfrom,
-             frequenciaverificacao = req.body.frequenciaverificacao,
-             gerarlog = req.body.gerarlog,
-             horainicio = req.body.horainicio,
-             proximaexecucao = date,
-             smtpauth = req.body.smtpauth,
-             smtphost = req.body.smtphost,
-             smtppassword = req.body.smtppassword,
-             smtpport = req.body.smtpport,
-             smtpstarttls = req.body.smtpstarttls,
-             smtpusername = req.body.smtpusername,
-             codmensagem = req.body.codmensagem,
-             codperiodo = req.body.codperiodo;
+              frequenciaverificacao = req.body.frequenciaverificacao,
+              gerarlog = req.body.gerarlog,
+              horainicio = req.body.horainicio,
+              proximaexecucao = date,
+              smtpauth = req.body.smtpauth,
+              smtphost = req.body.smtphost,
+              smtppassword = req.body.smtppassword,
+              smtpport = req.body.smtpport,
+              smtpstarttls = req.body.smtpstarttls,
+              smtpusername = req.body.smtpusername,
+              codmensagem = req.body.codmensagem,
+              codperiodo = req.body.codperiodo;
 
 
             return db.sequelize.query('SELECT COUNT(*) FROM tb_parametro')
@@ -79,9 +81,11 @@ module.exports = {
               gerarlog = req.body.gerarlog,
               horainicio = req.body.horainicio,
               codperiodo = req.body.periodo,
-              proximaexecucao = v_horainicio;
+              proximaexecucao = v_horainicio,
+              taxajuros = req.body.taxajuros,
+              taxamulta = req.body.taxamulta;
 
-        return db.sequelize.query('UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo', { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo  }, type: sequelize.QueryTypes.UPDATE })
+        return db.sequelize.query('UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta', { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
                            .then(retorno => res.status(201).send(retorno));
 
       },
