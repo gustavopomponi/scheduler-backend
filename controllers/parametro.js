@@ -85,8 +85,28 @@ module.exports = {
               taxajuros = req.body.taxajuros,
               taxamulta = req.body.taxamulta;
 
-        return db.sequelize.query('UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta', { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
-                           .then(retorno => res.status(201).send(retorno));
+        var execucao;
+        var query = '';
+
+        if (req.body.horainicio == null)
+        {
+
+          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta';
+
+          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
+                                 .then(retorno => res.status(201).send(retorno));
+
+        } else {
+
+          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta';
+
+          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
+                                 .then(retorno => res.status(201).send(retorno));
+
+        }
+
+        return execucao;
+        
 
       },
 
