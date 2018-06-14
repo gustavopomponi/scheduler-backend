@@ -23,7 +23,8 @@ module.exports = {
                                      ' par.boo_smtpstarttls "starttlsmtp",' +
                                      ' par.des_smtpusername "usuariosmtp",' +
                                      ' par.num_taxajuros "taxajuros",' +
-                                     ' par.num_taxamulta "taxamulta"' +
+                                     ' par.num_taxamulta "taxamulta",' +
+                                     ' par.boo_enviaemail "enviaemail"' +
                                   ' from'+
                                     ' tb_parametro par' +
                                     ' inner join tb_periodoverificacao per on (per.cod_periodoverificacao = par.cod_periodoverificacao)', { type: sequelize.QueryTypes.SELECT })
@@ -83,7 +84,8 @@ module.exports = {
               codperiodo = req.body.periodo,
               proximaexecucao = v_horainicio,
               taxajuros = req.body.taxajuros,
-              taxamulta = req.body.taxamulta;
+              taxamulta = req.body.taxamulta,
+              enviaemail = req.body.enviaemail;
 
         var execucao;
         var query = '';
@@ -91,16 +93,16 @@ module.exports = {
         if (req.body.horainicio == null)
         {
 
-          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta';
+          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta, boo_enviaemail = :enviaemail';
 
-          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
+          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta, enviaemail: enviaemail  }, type: sequelize.QueryTypes.UPDATE })
                                  .then(retorno => res.status(201).send(retorno));
 
         } else {
 
-          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta';
+          query = 'UPDATE tb_parametro SET num_frequenciaverificacao = :frequenciaverificacao, boo_gerarlog = :gerarlog, dt_horainicio = :horainicio, dt_proximaexecucao = :proximaexecucao, cod_periodoverificacao = :codperiodo, num_taxajuros = :taxajuros, num_taxamulta = :taxamulta, boo_enviaemail = :enviaemail';
 
-          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta  }, type: sequelize.QueryTypes.UPDATE })
+          execucao = db.sequelize.query(query , { replacements: { frequenciaverificacao: frequenciaverificacao, gerarlog: gerarlog, horainicio: horainicio, proximaexecucao: proximaexecucao, codperiodo: codperiodo, taxajuros: taxajuros, taxamulta: taxamulta, enviaemail: enviaemail }, type: sequelize.QueryTypes.UPDATE })
                                  .then(retorno => res.status(201).send(retorno));
 
         }
