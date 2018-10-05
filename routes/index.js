@@ -1,9 +1,10 @@
 'use strict'
 
 const routes = [
+    require('./autenticacao'),
     require('./periodoverificacao'),
     require('./mensagem'),
-    require('./parametro')
+    require('./parametro')    
 ];
 
 // Add access to the app and db objects to each route
