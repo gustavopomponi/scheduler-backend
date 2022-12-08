@@ -19,7 +19,7 @@
     "busca-cep": "^0.3.6",
     "chai": "^4.1.0",
     "cors": "^2.8.4",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "json-lint": "~0.1.0",
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
